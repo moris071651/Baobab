@@ -22,3 +22,30 @@ async function getData(page)
         return null
     }
 }
+
+// Render all cards
+async function renderData(page)
+{
+    const data = await getData(page)
+    const main = document.querySelector('main')
+    data.forEach((project) => {
+        const card = document.createElement('div')
+        const img  = document.createElement('img')
+        const proj = document.createElement('h3')
+        const desc = document.createElement('p')
+
+        img.alt = project.owner.login
+        img.src = project.owner.avatar_url
+        proj.textContent = project.name
+        desc.textContent = project.description
+
+        card.classList.add('card')
+        card.append(img)
+        card.append(proj)
+        card.append(desc)
+
+        main.append(card)
+    });
+}
+
+renderData(1)

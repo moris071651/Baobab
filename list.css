@@ -1,0 +1,30 @@
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px black dashed;
+    border-radius: 1rem;
+    transition: 500ms;
+}
+
+.card:hover {
+    transition: 300ms;
+    transform: scale(1.02);
+}
+
+.card img {
+    padding: 0.5rem;
+}
+
+.card p, .card h3 {
+    text-align: center;
+    padding: 0.5rem;
+}

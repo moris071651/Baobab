@@ -23,6 +23,18 @@ async function getData(page)
     }
 }
 
+function renderPageNumber(page)
+{
+    const pageNav = document.getElementById('page')
+    pageNav.textContent = `${page}`
+
+    const left = document.getElementById('left')
+    left.onclick = () => location.href = `list.html?page=${page - 1}`
+
+    const right = document.getElementById('right')
+    right.onclick = () => location.href = `list.html?page=${page + 1}`
+}
+
 // Render all cards
 async function renderData(page)
 {
@@ -52,4 +64,14 @@ async function renderData(page)
     });
 }
 
-renderData(1)
+function getPageNumber()
+{
+    const url = new URLSearchParams(window.location.search);
+    return parseInt(url.get('page')) || 1; 
+}
+
+
+
+const page = getPageNumber()
+renderPageNumber(page)
+renderData(page)

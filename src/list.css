@@ -99,3 +99,16 @@ main {
     text-align: center;
     padding: 0.5rem;
 }
+
+input {
+    display: none;
+    margin: 0 0.5rem;
+    padding: 0 0.5rem;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    border-radius: 10px;
+}
+
+#about main {
+    padding: 0 2rem;
+}

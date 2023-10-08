@@ -110,6 +110,8 @@ function getPageNumber()
 
 
 
+
+
 const page = getPageNumber()
 renderPageNumber(page)
 renderData(page)

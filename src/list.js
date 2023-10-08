@@ -9,17 +9,39 @@ async function getData(page)
         const response = await fetch(`${api}&page=${page}`, { header })
             .then((response) => {
                 if (!response.ok) {
+                    if (response.status == 422) {
+                        location.href = `list.html?page=${page - 1}`
+                    }
+                    else if (response.status == 403 && response.headers.has('X-RateLimit-Reset')) {
+                        alert("GitHub API Rate Limit Exceeded")
+                        alert("Wait Until The Site Refreshes Itself")
+                        const current = Math.floor(Date.now() / 1000);
+                        const reset = parseInt(response.headers.get('X-RateLimit-Reset'));
+
+                        const wait = reset - current;
+                        if (wait > 0) {
+                            setTimeout(() => {
+                                location.reload()
+                            }, (wait + 1) * 1000)
+                        }
+                      }
+
                     throw new Error(`GitHub API error: ${response.status} - ${response.statusText}`);
                 }
-
+                
                 return response;
             })
+            .catch((response) => {
+                console.log(response)
+            })
+
         const data = await response.json()
-        return data.items
+        console.log(data)
+        return [data.items, !(30 * page > data.total_count )]
     }
     catch (error) {
         console.error('Error fetching data:', error)
-        return null
+        return [null, null]
     }
 }
 
@@ -29,16 +51,25 @@ function renderPageNumber(page)
     pageNav.textContent = `${page}`
 
     const left = document.getElementById('left')
-    left.onclick = () => location.href = `list.html?page=${page - 1}`
-
+    if(page > 1) {
+        left.onclick = () => location.href = `list.html?page=${page - 1}`
+    }
+    else {
+        left.style = 'opacity: 0;'
+        left.disabled = true
+    }
+    
     const right = document.getElementById('right')
     right.onclick = () => location.href = `list.html?page=${page + 1}`
+    right.disabled = true
 }
 
 // Render all cards
 async function renderData(page)
 {
-    const data = await getData(page)
+    const [data, more] = await getData(page)
+    if (!data) return
+
     const main = document.querySelector('main')
     data.forEach((project) => {
         const link = document.createElement('a')
@@ -62,6 +93,13 @@ async function renderData(page)
         link.append(card)
         main.append(link)
     });
+
+    if (more) {
+        document.getElementById('right').disabled = false
+    }
+    else {
+        document.getElementById('right').style = 'opacity: 0;'
+    }
 }
 
 function getPageNumber()

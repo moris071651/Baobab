@@ -1,3 +1,35 @@
+nav {
+    z-index: 99;
+    height: 5vh;
+    top: 0.5rem;
+    margin: .5rem;
+    position: sticky;
+    
+    border: 1px black solid;
+    border-radius: 10px;
+
+    background: #bfcc94;
+
+    transition: 500ms;
+} 
+
+nav:hover {
+    transition: 300ms;
+    transform: scale(1.02);
+}
+
+a {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+body {
+    background: #e6aace;
+    width: calc(100vw - scrollgutter);
+    height: fit-content;
+}
+
 main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
@@ -5,14 +37,16 @@ main {
 }
 
 .card {
+    padding: 0;
     display: flex;
     overflow: hidden;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border: 1px black dashed;
+    border: 1px black solid;
     border-radius: 1rem;
     transition: 500ms;
+    background: #f0f4ef;
 }
 
 .card:hover {
@@ -21,6 +55,8 @@ main {
 }
 
 .card img {
+    width: 100%;
+    height: auto;
     padding: 0.5rem;
 }
 

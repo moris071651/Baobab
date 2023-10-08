@@ -29,6 +29,7 @@ async function renderData(page)
     const data = await getData(page)
     const main = document.querySelector('main')
     data.forEach((project) => {
+        const link = document.createElement('a')
         const card = document.createElement('div')
         const img  = document.createElement('img')
         const proj = document.createElement('h3')
@@ -39,12 +40,15 @@ async function renderData(page)
         proj.textContent = project.name
         desc.textContent = project.description
 
+        link.href = project.html_url
+
         card.classList.add('card')
         card.append(img)
         card.append(proj)
         card.append(desc)
 
-        main.append(card)
+        link.append(card)
+        main.append(link)
     });
 }
 
